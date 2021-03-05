@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
+
 import auth from './auth';
-import dates from './dates';
+import posts from './posts';
 
 export default combineReducers({
   auth,
-  dates,
+  posts,
 });

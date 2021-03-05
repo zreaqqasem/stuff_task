@@ -9,13 +9,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_DATE_START: {
+    case types.FETCH_POSTS_START: {
       return {
         ...state,
         isFetching: true,
       };
     }
-    case types.FETCH_DATE_FINISHED: {
+    case types.FETCH_POSTS_FINISHED: {
       const {data} = action;
       return {
         ...state,
@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
         data,
       };
     }
-    case types.FETCH_DATE_ERROR: {
+    case types.FETCH_POSTS_ERROR: {
       const {error} = action;
       return {
         ...state,
@@ -34,20 +34,20 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     }
-    case types.ADD_DATE_START: {
+    case types.ADD_POST_START: {
       return {
         ...state,
         isFetching: true,
       };
     }
-    case types.ADD_DATE_FINISHED: {
+    case types.ADD_POST_FINISHED: {
       return {
         ...state,
         isFetching: false,
         loggedIn: true,
       };
     }
-    case types.ADD_DATE_ERROR: {
+    case types.ADD_POST_ERROR: {
       const {error} = action;
       return {
         ...state,

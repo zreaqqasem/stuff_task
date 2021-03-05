@@ -1,5 +1,5 @@
-import auth from '@react-native-firebase/auth';
 import types from './types';
+import auth from '@react-native-firebase/auth';
 
 const loginStart = () => ({
   type: types.LOGIN_START,

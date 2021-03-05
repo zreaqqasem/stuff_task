@@ -6,24 +6,21 @@ import {
   FlatList,
   Button,
   TouchableOpacity,
-  StyleSheet,
-  Image,
 } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/firestore';
+import {connect} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
-import {connect} from 'react-redux';
 import Login from './src/screens/Login';
 import Post from './src/screens/Post';
 import {styles} from './styles';
 import {loginUser, logoutUser} from './src/actions/auth';
-import {add, fetchs} from './src/actions/s';
-
+import {addPost, fetchPosts} from './src/actions/posts';
 
 class App extends Component {
   constructor() {
     super();
-    this.ref = firestore().collection('s');
+    this.ref = firebase().collection('posts');
     this.firestoreUnsubscriber = null;
     this.authUnsubscriber = null;
     this.state = {
@@ -31,6 +28,7 @@ class App extends Component {
       passwordValue: '',
     };
   }
+
   componentDidMount() {
     this.authUnsubscriber = auth().onAuthStateChanged((user) => {
       console.log(user);
@@ -48,11 +46,11 @@ class App extends Component {
   }
 
   onCollectionUpdate = async (querySnapshot) => {
-    await this.props.fetchs(querySnapshot);
+    await this.props.fetchPosts(querySnapshot);
   };
 
-  addRandom = () => {
-    this.props.add(this.ref);
+  addRandomPost = () => {
+    this.props.addPost(this.ref);
   };
 
   onLogin = async () => {
@@ -87,6 +85,7 @@ class App extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
+         
           {this.props.auth.loggedIn && (
             <TouchableOpacity
               style={styles.headerButton}
@@ -97,10 +96,10 @@ class App extends Component {
         </View>
         {this.props.auth.loggedIn ? (
           <FlatList
-            data={this.props.s.data}
-            renderItem={({item}) => < ={item} />}
+            data={this.props.posts.data}
+            renderItem={({item}) => <Post post={item} />}
             ListFooterComponent={
-              <Button title="Add random " onPress={this.addRandom} />
+              <Button title="Add random post" onPress={this.addRandomPost} />
             }
           />
         ) : (
@@ -121,14 +120,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  s: state.s,
+  posts: state.posts,
 });
 
 const mapDispatchToProps = {
   loginUser,
   logoutUser,
-  add,
-  fetchs,
+  addPost,
+  fetchPosts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

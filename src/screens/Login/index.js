@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   TextInput,
@@ -10,7 +10,6 @@ import {
   Dimensions,
 } from 'react-native';
 import {connect} from 'react-redux';
-var show = false;
 import {styles} from '../../../styles';
 
 const Login = ({
@@ -67,7 +66,6 @@ const Login = ({
 
       <View style={spacer.container}></View>
 
-
       <View style={styless.container}>
         <Button color="#FCFAFA" title="Login" onPress={onPress} />
       </View>
@@ -76,6 +74,7 @@ const Login = ({
     </View>
   );
 };
+
 const style = StyleSheet.create({
   container: {
     height: 60,
@@ -102,6 +101,7 @@ const spacer = StyleSheet.create({
     width: 300,
   },
 });
+
 
 const mapStateToProps = (state) => ({});
 
